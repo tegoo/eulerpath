@@ -1,2 +1,2 @@
 # eulerpath
-Euler Path
+Euler Path course project
