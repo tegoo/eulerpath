@@ -8,12 +8,24 @@ fi
 
 mkdir $EXPORT_DIR
 
-i=0
-./run.pl | sed \
-'s/\[\([a-z]\),\([a-z]\)\]/\1->\2\;/g; 
- s/\;,/;/g; s/,/\n/g; s/\]//g; 
- s/\[//g;' | sed 's/^\(.*\)$/digraph {\1}/' | while read graph
- do
- 	i=$((i+1))
- 	echo $graph | dot -Tpng -o "paths/path_${i}.png"
- done
+snum=1
+./run.pl | sed '
+s/\[\([a-z]\),\([a-z]\)\]/\1->\2\;/g; 
+s/\;,/;/g; 
+s/,/\n/g; 
+s/\]//g; 
+s/\[//g;' | while read graph
+do
+	step=1
+	printf "digraph {"
+	printf $graph | sed 's/;/\n/g' | while read edge
+	do
+		printf "${edge} [label=\"${step}\"];"
+		step=$((step+1))
+	done
+	printf "}\n"
+done | while read graph
+do
+	echo $graph | circo -Tpng -o "${EXPORT_DIR}/path_${snum}.png"
+	snum=$((snum+1))
+done
