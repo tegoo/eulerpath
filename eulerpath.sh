@@ -12,7 +12,8 @@ snum=1
 ./run.pl | sed '
 s/\[\([a-z]\),\([a-z]\)\]/\1->\2\;/g; 
 s/\;,/;/g; 
-s/,/\n/g; 
+s/,/\n/g;
+s/\(.\)$/\1\n/; 
 s/\]//g; 
 s/\[//g;' | while read graph
 do
