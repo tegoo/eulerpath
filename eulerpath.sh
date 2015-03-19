@@ -15,7 +15,7 @@ s/\;,/;/g;
 s/,/\n/g;
 s/\(.\)$/\1\n/; 
 s/\]//g; 
-s/\[//g;' | while read graph
+s/\[//g;' | sed '/^$/d' | while read graph
 do
 	step=1
 	printf "digraph {"
