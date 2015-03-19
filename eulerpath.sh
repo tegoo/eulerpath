@@ -21,6 +21,11 @@ do
 	printf "digraph {"
 	printf $graph | sed 's/;/\n/g' | while read edge
 	do
+		if [ "${step}" -eq "1" ]
+		then
+			printf $edge | sed 's/^\([a-z]\).*/\1/'
+			printf "[style=\"filled\", fillcolor=\"yellow\"];"
+		fi
 		printf "${edge} [label=\"${step}\"];"
 		step=$((step+1))
 	done
