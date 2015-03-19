@@ -19,12 +19,13 @@ s/\[//g;' | while read graph
 do
 	step=1
 	printf "digraph {"
+	printf "node [shape=circle, fontcolor=yellow, style=filled, fillcolor=black];"
 	printf $graph | sed 's/;/\n/g' | while read edge
 	do
 		if [ "${step}" -eq "1" ]
 		then
 			printf $edge | sed 's/^\([a-z]\).*/\1/'
-			printf "[style=\"filled\", fillcolor=\"yellow\"];"
+			printf "[style=filled, fillcolor=yellow, shape=doublecircle, fontcolor=black];"
 		fi
 		printf "${edge} [label=\"${step}\"];"
 		step=$((step+1))
